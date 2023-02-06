@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Button, TextField, Typography } from '@mui/material'
+import { Button, TextField } from '@mui/material'
 import axios from 'axios'
 import { toast ,ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 // toast.configure();
 
@@ -35,18 +36,17 @@ function Login() {
               });
           });
         } else {
-            toast.error('Please enter your phone number', {autoClose:3000})
+            toast.error('Please enter your phone number!', {autoClose:3000})
         }
     };
-
+    
       const handleVerify = (e) => {
         e.preventDefault();
       
         const body = JSON.stringify({ phoneNumber, accessCode});
         if(accessCode !== ""){
-        axios
-          .post(
-            'http://localhost:9000/api/validate-code',
+        axios.post(
+            'http://localhost:9000/api/validate',
             body,
             {
                 headers: {
@@ -55,10 +55,10 @@ function Login() {
             }
           )
           .then((res) => {
-            toast.success('Verified!', {autoClose:3000});
+            toast.success('Verified!', {autoClose:3000});           
           }).catch((err) => {
               console.log('err', err);
-              toast.error('Error', {autoClose:3000})
+              toast.error('Wrong code!', {autoClose:3000})
 
         });
       } else {
